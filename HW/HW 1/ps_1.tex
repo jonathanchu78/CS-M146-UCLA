@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{CM146}
+\newcommand{\ced}{Fall 2018}
+\newcommand{\ctitle}[3]{\title{\vspace{-0.5in}\cnum, \ced\\Problem Set #1: #2}}
+\usepackage{enumitem}
+\newcommand{\solution}[1]{{{\color{blue}{\bf Solution:} {#1}}}}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\begin{document}
+\ctitle{01}{Jonathan Chu}
+\date{}
+\maketitle
+\vspace{-0.75in}
+
+\section{Problem 2}
+\begin{enumerate}
+\item
+
+\solution{
+$$Gain(S, X_j) = Entropy(S) - \sum_{v \in V} \frac{|S_v|}{|S|}Entropy(S_v)$$
+$$Gain(S, X_j) = B\left(\frac{p}{p+n}\right) - \sum_{v \in V} \frac{|S_v|}{|S|}B\left(\frac{p}{p+n}\right)$$
+$$Gain(S, X_j) = B\left(\frac{p}{p+n}\right)\left(1 - \sum_{v \in V}\frac{|S_v|}{|S|}\right) = 0$$
+}
+
+\end{enumerate}
+
+\section{Problem 3}
+\begin{enumerate}
+\item
+\solution{Because a point is considered its own neighbor, the value of k that minimizes the training set error is 1. The resulting training error is 0, since our prediction will always equal the training example's value.}
+
+\item
+\solution{
+Since our task is binary \{-1, 1\}, a very large value of k would cause the average output of neighbors to be very close to 0, meaning our prediction will always be low confidence.
+\newline
+\newline
+A very small value of k could result in overfitting, since we only consider very similar examples in the training set when making a prediction. Outliers in the training data would have more impact on our predictions.
+}
+
+\item
+\solution{
+By inspection, there is no value of k for which we can correctly predict the 2 upper +'s and the 2 lower -'s in a leave-one-out setting. Thus, the minimum error we can hope to achieve is 4/14. Intuitively, we seek k values that encompass all or at least most of the other points in the same group of 7. 
+\newline
+\newline
+Values of k that achieve this are 5 and 7. 6 is not guaranteed to achieve minimum error because, for example, (1, 5) is equidistant to both (5, 1) which is not the desired prediction, and (5, 9) which is.
+}
+\end{enumerate}
+\end{document}
