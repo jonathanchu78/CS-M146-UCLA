@@ -228,12 +228,23 @@ def error(clf, X, y, ntrials=100, test_size=0.2) :
     # compute cross-validation error over ntrials
     # hint: use train_test_split (be careful of the parameters)
 
-    train_error = 0
-    test_error = 0
+    total_train_error = 0
+    total_test_error = 0
+
+    for i in range(1, 100):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=i)
+        clf.fit(X_train, y_train)      # fit training data using the classifier
+        y_pred_train = clf.predict(X_train)        # take the classifier and run it on the training data
+        total_train_error += 1 - metrics.accuracy_score(y_train, y_pred_train, normalize=True)
+        y_pred_test = clf.predict(X_test)
+        total_test_error += 1 - metrics.accuracy_score(y_test, y_pred_test, normalize=True)
+
+    average_train_error = total_train_error / 100
+    average_test_error = total_test_error / 100
 
     ### ========== TODO : END ========== ###
 
-    return train_error, test_error
+    return average_train_error, average_test_error
 
 
 def write_predictions(y_pred, filename, yname=None) :
@@ -320,7 +331,23 @@ def main():
     # part d: evaluate training error of k-Nearest Neighbors classifier
     # use k = 3, 5, 7 for n_neighbors
     print('Classifying using k-Nearest Neighbors...')
+    clf = KNeighborsClassifier(n_neighbors=3)
+    clf = clf.fit(X, y)
+    y_pred = clf.predict(X)
+    train_error = 1 - metrics.accuracy_score(y, y_pred, normalize=True)
+    print('\t-- training error for k=3: %.3f' % train_error)
 
+    clf = KNeighborsClassifier(n_neighbors=5)
+    clf = clf.fit(X, y)
+    y_pred = clf.predict(X)
+    train_error = 1 - metrics.accuracy_score(y, y_pred, normalize=True)
+    print('\t-- training error for k=5: %.3f' % train_error)
+
+    clf = KNeighborsClassifier(n_neighbors=7)
+    clf = clf.fit(X, y)
+    y_pred = clf.predict(X)
+    train_error = 1 - metrics.accuracy_score(y, y_pred, normalize=True)
+    print('\t-- training error for k=7: %.3f' % train_error)
     ### ========== TODO : END ========== ###
 
 
@@ -328,6 +355,21 @@ def main():
     ### ========== TODO : START ========== ###
     # part e: use cross-validation to compute average training and test error of classifiers
     print('Investigating various classifiers...')
+    clf = MajorityVoteClassifier() # create MajorityVote classifier, which includes all model parameters
+    train_error, test_error = error(clf, X, y)
+    print('\t-- MajorityVote: training error = %.3f, test error = %.3f' % (train_error , test_error))
+
+    clf = RandomClassifier() # create Random classifier, which includes all model parameters
+    train_error, test_error = error(clf, X, y)
+    print('\t-- Random:       training error = %.3f, test error = %.3f' % (train_error , test_error))
+
+    clf = DecisionTreeClassifier() # create DecisionTree classifier, which includes all model parameters
+    train_error, test_error = error(clf, X, y)
+    print('\t-- DecisionTree: training error = %.3f, test error = %.3f' % (train_error , test_error))
+
+    clf = KNeighborsClassifier(n_neighbors=5) # create KNN classifier, which includes all model parameters
+    train_error, test_error = error(clf, X, y)
+    print('\t-- KNeighbors:   training error = %.3f, test error = %.3f' % (train_error , test_error))
 
     ### ========== TODO : END ========== ###
 
@@ -336,7 +378,19 @@ def main():
     ### ========== TODO : START ========== ###
     # part f: use 10-fold cross-validation to find the best value of k for k-Nearest Neighbors classifier
     print('Finding the best k for KNeighbors classifier...')
-
+    kvals = []
+    test_errors = []
+    for i in range(1, 51):
+        if i % 2 == 0:
+            continue
+        clf = KNeighborsClassifier(n_neighbors=i) # create KNN classifier
+        kvals.append(i)
+        test_errors.append(1 - np.average(cross_val_score(clf, X, y, cv=10)))
+    plt.xlabel('k')
+    plt.ylabel('10-fold cross validation error rate')
+    print('\t-- the value of k that minimizes cross validation error is %d' % kvals[test_errors.index(min(test_errors))])
+    # plt.plot(kvals, test_errors, marker='o')
+    # plt.show()
     ### ========== TODO : END ========== ###
 
 
@@ -344,6 +398,24 @@ def main():
     ### ========== TODO : START ========== ###
     # part g: investigate decision tree classifier with various depths
     print('Investigating depths...')
+    depths = []
+    train_errors = []
+    test_errors = []
+    for i in range(1, 21):
+        clf = DecisionTreeClassifier(max_depth=i) # create depth classifier
+        clf.fit(X, y)                  # fit training data using the classifier
+        y_pred = clf.predict(X)        # take the classifier and run it on the training data
+        train_errors.append(1 - metrics.accuracy_score(y, y_pred, normalize=True))
+        depths.append(i)
+        test_errors.append(1 - np.average(cross_val_score(clf, X, y, cv=10)))
+        # print('for depth %d, the error is %.3f' % (i, 1 - np.average(cross_val_score(clf, X, y, cv=10))))
+    plt.xlabel('depth')
+    plt.ylabel('10-fold cross validation error rate')
+    print('\t-- the depth that minimizes cross validation error is %d' % kvals[test_errors.index(min(test_errors))])
+    # plt.plot(depths, test_errors, marker='o', label='Test Error')
+    # plt.plot(depths, train_errors, marker='x', label='Training Error')
+    # plt.legend(loc='lower left')
+    # plt.show()
 
     ### ========== TODO : END ========== ###
 
@@ -352,7 +424,61 @@ def main():
     ### ========== TODO : START ========== ###
     # part h: investigate Decision Tree and k-Nearest Neighbors classifier with various training set sizes
     print('Investigating training set sizes...')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
+    splits = []
+    all_errors = {
+        'knn_train_errors' : [],
+        'knn_test_errors'  : [],
+        'dt_train_errors'  : [],
+        'dt_test_errors'   : []
+    }
+    for i in range(1, 11):
+        if i == 10:
+            X_train_subset = X_train
+            y_train_subset = y_train
+        else:
+            X_train_subset, X_test_subset, y_train_subset, y_test_subset = train_test_split(X_train, y_train, train_size=i*0.1)
+        splits.append(i*0.1)
+
+
+        errors = {}
+        clf = KNeighborsClassifier(n_neighbors=7) # create KNN classifier, which includes all model parameters
+        clf.fit(X_train_subset, y_train_subset)      # fit training data using the classifier
+        y_pred_train = clf.predict(X_train_subset)        # take the classifier and run it on the training data
+        knn_train_error = 1 - metrics.accuracy_score(y_train_subset, y_pred_train, normalize=True)
+        y_pred_test = clf.predict(X_test)
+        knn_test_error = 1 - metrics.accuracy_score(y_test, y_pred_test, normalize=True)
+        # print('knn with %.1f training had %.3f training error and %.3f test error' % (0.1*i, knn_train_error, knn_test_error))
+
+        clf = DecisionTreeClassifier(max_depth=11) # create DecisionTree classifier, which includes all model parameters
+        clf.fit(X_train_subset, y_train_subset)      # fit training data using the classifier
+        y_pred_train = clf.predict(X_train_subset)        # take the classifier and run it on the training data
+        dt_train_error = 1 - metrics.accuracy_score(y_train_subset, y_pred_train, normalize=True)
+        y_pred_test = clf.predict(X_test)
+        dt_test_error = 1 - metrics.accuracy_score(y_test, y_pred_test, normalize=True)
+        # print('dt  with %.1f training had %.3f training error and %.3f test error' % (0.1*i, knn_train_error, knn_test_error))
+
+        all_errors['knn_train_errors'].append(knn_train_error)
+        all_errors['knn_test_errors'].append(knn_test_error)
+        all_errors['dt_train_errors'].append(dt_train_error)
+        all_errors['dt_test_errors'].append(dt_test_error)
+
+    plt.title('KNeighbors Learning Curves')
+    plt.xlabel('portion of training set used')
+    plt.ylabel('error rate')
+    plt.plot(splits, all_errors['knn_train_errors'], marker='o', label='Training Error')
+    plt.plot(splits, all_errors['knn_test_errors'], marker='x', label='Test Error')
+    plt.legend(loc='upper right')
+    plt.show()
+
+    plt.title('Decision Tree Learning Curves')
+    plt.xlabel('portion of training set used')
+    plt.ylabel('error rate')
+    plt.plot(splits, all_errors['dt_train_errors'], marker='o', label='Training Error')
+    plt.plot(splits, all_errors['dt_test_errors'], marker='x', label='Test Error')
+    plt.legend(loc='upper right')
+    plt.show()
     ### ========== TODO : END ========== ###
 
 

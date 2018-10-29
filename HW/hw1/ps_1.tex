@@ -7,6 +7,7 @@
 \newcommand{\solution}[1]{{{\color{blue}{\bf Solution:} {#1}}}}
 \usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
 \renewcommand*{\theenumi}{\alph{enumi}}
 \renewcommand*\labelenumi{(\theenumi)}
@@ -51,5 +52,100 @@ By inspection, there is no value of k for which we can correctly predict the 2 u
 \newline
 Values of k that achieve this are 5 and 7. 6 is not guaranteed to achieve minimum error because, for example, (1, 5) is equidistant to both (5, 1) which is not the desired prediction, and (5, 9) which is.
 }
+\end{enumerate}
+
+\section{Problem 4}
+\begin{enumerate}
+\item %4a
+\solution{
+
+Pclass:
+The better the class, the greater the chance of survival. The 3rd class had a much lower frequency of survival than the other classes. Roughly 2/3 of first class members survived, and the 2nd class was fairly even between survivors and deaths.
+
+Sex:
+There is a large disparity in survival rate between men and women, women being more fortunate.
+
+Age:
+Children under ten had the highest survival rate. Otherwise, there isn’t an obvious trend.
+
+Siblings/Spouses:
+There weren’t many individuals with more than one sibling/spouse. Individuals with 1 sibling/spouse had the highest frequency of survival, and those with 0 had a rather low frequency of survival.
+
+Parents/Children:
+There were very few individuals with more than 2 parents/children. Those with 1-2 had a high frequency of survival, and those with 0 had lower rates.
+
+Fare:
+The majority of passengers paid a fare below 50, and these individuals had a rather low frequency of survival. All passengers who paid more had much greater survival rates.
+
+Port of Embarkation:
+Passengers who embarked from Cherbourg had a much higher frequency of survival than the other 2 ports.
+}
+
+\item %4b
+\solution{
+We set the probabilities to [occurrences of 0]/[length of y] and [occurrences of 1]/[length of y] for 0 and 1, respectively, and generate n random values from \{0, 1\} using those probabilities:
+
+Classifying using Random...
+
+	-- training error: 0.485
+}
+
+\item %4c
+\solution{
+
+Classifying using Decision Tree...
+
+	-- training error: 0.014
+}
+
+\item %4d
+\solution{
+
+Classifying using k-Nearest Neighbors...
+
+	-- training error for k=3: 0.167
+	
+	-- training error for k=5: 0.201
+	
+	-- training error for k=7: 0.240
+}
+
+\item %4e
+\solution{
+Investigating various classifiers...
+
+	-- MajorityVote: training error = 0.400, test error = 0.403
+	
+	-- Random:       training error = 0.484, test error = 0.481
+	
+	-- DecisionTree: training error = 0.011, test error = 0.243
+	
+	-- KNeighbors:   training error = 0.210, test error = 0.311
+}
+
+\item %4f
+\solution{
+Finding the best k for KNeighbors classifier...
+	-- the value of k that minimizes cross validation error is 7
+}
+
+\includegraphics[width=\linewidth]{KNN-CV.png}
+
+\item %4g
+\solution{
+Investigating depths...
+
+	-- the depth that minimizes cross validation error is 11
+	
+For larger depth values, there is clearly overfitting. The training error approaches zero, while the test error remains somewhat consistent.
+}
+
+\includegraphics[width=\linewidth]{DecisionTree-CV.png}
+
+\item %4h
+\solution{
+
+}
+
 \end{enumerate}
 \end{document}
