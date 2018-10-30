@@ -4,7 +4,7 @@
 \newcommand{\ced}{Fall 2018}
 \newcommand{\ctitle}[3]{\title{\vspace{-0.5in}\cnum, \ced\\Problem Set #1: #2}}
 \usepackage{enumitem}
-\newcommand{\solution}[1]{{{\color{blue}{\bf Solution:} {#1}}}}
+\newcommand{\solution}[1]{{{\color{black}{\bf Solution:} {#1}}}}
 \usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -20,7 +20,8 @@
 \maketitle
 \vspace{-0.75in}
 
-\section{Problem 2}
+\section{(on CCLE)}
+\section{Entropy and Information}
 \begin{enumerate}
 \item
 
@@ -32,20 +33,22 @@ $$Gain(S, X_j) = B\left(\frac{p}{p+n}\right)\left(1 - \sum_{v \in V}\frac{|S_v|}
 
 \end{enumerate}
 
-\section{Problem 3}
+\section{k-Nearest Neighbors and Cross-validation}
 \begin{enumerate}
-\item
+\item %3a
 \solution{Because a point is considered its own neighbor, the value of k that minimizes the training set error is 1. The resulting training error is 0, since our prediction will always equal the training example's value.}
+\vspace{0.5cm}
 
-\item
+\item %3b
 \solution{
 Since our task is binary \{-1, 1\}, a very large value of k would cause the average output of neighbors to be very close to 0, meaning our prediction will always be low confidence.
 \newline
 \newline
 A very small value of k could result in overfitting, since we only consider very similar examples in the training set when making a prediction. Outliers in the training data would have more impact on our predictions.
 }
+\vspace{0.5cm}
 
-\item
+\item %3c
 \solution{
 By inspection, there is no value of k for which we can correctly predict the 2 upper +'s and the 2 lower -'s in a leave-one-out setting. Thus, the minimum error we can hope to achieve is 4/14. Intuitively, we seek k values that encompass all or at least most of the other points in the same group of 7. 
 \newline
@@ -54,7 +57,7 @@ Values of k that achieve this are 5 and 7. 6 is not guaranteed to achieve minimu
 }
 \end{enumerate}
 
-\section{Problem 4}
+\section{Applying decision trees and k-nearest neighbors}
 \begin{enumerate}
 \item %4a
 \solution{
@@ -80,6 +83,7 @@ The majority of passengers paid a fare below 50, and these individuals had a rat
 Port of Embarkation:
 Passengers who embarked from Cherbourg had a much higher frequency of survival than the other 2 ports.
 }
+\vspace{0.5cm}
 
 \item %4b
 \solution{
@@ -89,6 +93,7 @@ Classifying using Random...
 
 	-- training error: 0.485
 }
+\vspace{0.5cm}
 
 \item %4c
 \solution{
@@ -97,6 +102,7 @@ Classifying using Decision Tree...
 
 	-- training error: 0.014
 }
+\vspace{0.5cm}
 
 \item %4d
 \solution{
@@ -109,6 +115,7 @@ Classifying using k-Nearest Neighbors...
 	
 	-- training error for k=7: 0.240
 }
+\vspace{0.5cm}
 
 \item %4e
 \solution{
@@ -123,6 +130,7 @@ Investigating various classifiers...
 	-- KNeighbors:   training error = 0.210, test error = 0.311
 }
 
+\newpage
 \item %4f
 \solution{
 Finding the best k for KNeighbors classifier...
@@ -131,21 +139,25 @@ Finding the best k for KNeighbors classifier...
 
 \includegraphics[width=\linewidth]{KNN-CV.png}
 
+\newpage
 \item %4g
 \solution{
 Investigating depths...
 
-	-- the depth that minimizes cross validation error is 11
+	-- the depth that minimizes cross validation error is 3
 	
-For larger depth values, there is clearly overfitting. The training error approaches zero, while the test error remains somewhat consistent.
+For larger depth values, there is clearly overfitting. The training error approaches zero, while the test error gradually increases.
 }
 
 \includegraphics[width=\linewidth]{DecisionTree-CV.png}
 
+\newpage
 \item %4h
 \solution{
-
+Overall, it's clear that the Decision Tree performs better on this dataset than K-Nearest Neighbors, since the training and test errors for the Decision Tree were significantly lower on every trial. The trends of the Decision Tree learning curves, starting far apart but approaching each other as training data increases, indicates that the model obtained sufficient training data to perform well as the two lines converged.
 }
+
+\includegraphics[width=\linewidth]{LearningCurves.png}
 
 \end{enumerate}
 \end{document}
