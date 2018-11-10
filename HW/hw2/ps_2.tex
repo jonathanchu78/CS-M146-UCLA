@@ -8,6 +8,9 @@
 \usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings} %for listings of the source code
+
 
 \renewcommand*{\theenumi}{\alph{enumi}}
 \renewcommand*\labelenumi{(\theenumi)}
@@ -60,9 +63,48 @@ $$|\boldsymbol{w^Tx_i}+\theta| = |w_1x_1 + w_2x_2 + w_3x_3 + \theta| \geq 1$$
 $\implies |w_1 + w_2 + w_3 + \theta| \geq 1$ and $|-w_1 + -w_2 + -w_3 + \theta| \geq 1$
 
 is optimal.
-
- 
 }
+\end{enumerate}
+
+\section{Implementation: Polynomial Regression}
+\begin{enumerate}
+\item %4a
+By inspection, linear regression would not model the data very accurately. Although lines with negative slope on both the training and test data seem like they would perform moderately well, there would still be high training and test error, since the square distance from points to the line would be somewhat large for many of the data points. 
+
+
+\includegraphics[width=\linewidth]{Training_Data.png}
+\includegraphics[width=\linewidth]{Test_Data.png}
+
+\item %4b
+\begin{lstlisting}
+Phi = np.concatenate((np.ones(np.shape(X)), X), 1)
+\end{lstlisting}
+
+\item %4c
+\begin{lstlisting}
+y = np.dot(self.coef_, np.transpose(X))
+\end{lstlisting}
+
+\item %4d
+Investigating linear regression...
+
+	 --The model cost with zero weights is 40.233847
+
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+ \hline
+ $\eta$ & $\#$ Iterations & Final Coefficients & Final Value of J($\theta$)\\ 
+ \hline
+ 0.00407 & 10000 & -9.40470 x $10^{18}$, -4.65229 x $10^{18}$ & 1.35545 x $10^{38}$ \\ 
+ 0.001 & 764 & & 0.195629 \\ 
+ 0.0001 & 7020 & & 0.195629 \\ 
+ 0.00001 & 10000 & & 0.204320 \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+
 
 \end{enumerate}
 
