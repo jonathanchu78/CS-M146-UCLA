@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.26)  10 NOV 2018 12:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.26)  11 NOV 2018 08:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -304,34 +304,50 @@ File: Test_Data.png Graphic file (type png)
 Package pdftex.def Info: Test_Data.png  used on input line 76.
 (pdftex.def)             Requested size: 332.62494pt x 249.47908pt.
  [2 <./Training_Data.png>]
-Overfull \hbox (54.81142pt too wide) in paragraph at lines 95--105
+Overfull \hbox (51.06662pt too wide) in paragraph at lines 95--105
  [] 
  []
 
-[3 <./Test_Data.png>] (./ps_2.aux) ) 
+[3 <./Test_Data.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 115--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--129
+
+ []
+
+<Errors.png, id=29, 462.528pt x 346.896pt>
+File: Errors.png Graphic file (type png)
+<use Errors.png>
+Package pdftex.def Info: Errors.png  used on input line 138.
+(pdftex.def)             Requested size: 332.62494pt x 249.47908pt.
+[4] [5 <./Errors.png>] (./ps_2.aux) ) 
 Here is how much of TeX's memory you used:
- 4971 strings out of 492982
- 68317 string characters out of 6134895
- 154582 words of memory out of 5000000
- 8466 multiletter control sequences out of 15000+600000
+ 4976 strings out of 492982
+ 68386 string characters out of 6134895
+ 155582 words of memory out of 5000000
+ 8470 multiletter control sequences out of 15000+600000
  11864 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,9n,35p,364b,1090s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on ps_2.pdf (3 pages, 134130 bytes).
+ 41i,9n,35p,408b,1090s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on ps_2.pdf (5 pages, 176855 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

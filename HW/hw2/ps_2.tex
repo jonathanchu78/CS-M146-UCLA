@@ -92,19 +92,54 @@ Investigating linear regression...
 
 
 \begin{center}
-\begin{tabular}{ |c|c|c|c| } 
+\begin{tabular}{ |c|c|c|c|c| } 
  \hline
- $\eta$ & $\#$ Iterations & Final Coefficients & Final Value of J($\theta$)\\ 
+ $\eta$ & $\#$ Iter. & Final Coefficients & Final J($\theta$) & Time Taken (s)\\ 
  \hline
- 0.00407 & 10000 & -9.40470 x $10^{18}$, -4.65229 x $10^{18}$ & 1.35545 x $10^{38}$ \\ 
- 0.001 & 764 & & 0.195629 \\ 
- 0.0001 & 7020 & & 0.195629 \\ 
- 0.00001 & 10000 & & 0.204320 \\ 
+ 0.00407 & 10000 & -9.4047e+18, -4.6523e+18 & 2.7109e+39 & 0.187604\\ 
+ $10^{-4}$ & 764 & 2.4464, -2.8164 & 3.9126 & 0.0144\\ 
+ $10^{-5}$ & 7020 & 2.4465, -2.8164 & 3.9126 & 0.1290\\ 
+ $10^{-6}$ & 10000 & 2.2704, -2.4606 & 4.0864 & 0.1850\\
  \hline
 \end{tabular}
 \end{center}
 
+For $\eta$ = 0.00407 and $10^{-6}$, the gradient descent algorithm stops when it reaches max iterations, meaning that it wasn't able to find a minimum. For 0.00407, the coefficients are very large, implying that the step size was too large, and the algorithm overstepped the minimum. 
 
+For $10^{-4}$ and $10^{-5}$, the final coefficients match and the number of iterations is less than 10,000, meaning that in both cases, the algorithm found a minimum. However, we see that with $10^{-4}$, the algorithm converged after much fewer iterations, about a factor of ten less, so we know that the ideal step size is closer to $10^{-4}$. 
+
+For $10^{-6}$, the final coefficients are close to the final coefficients for $10^{-4}$ and $10^{-5}$, but not quite there, implying that the step size was too small and the algorithm was taking too long to converge.
+
+\item %4e 
+
+Fitting with closed-form solution: \newline
+	 --Final Coefficients: 2.446407, -2.816354 \newline
+	 --Final value of objective function: 3.912576 \newline
+	 --Time taken: 0.000306 \newline
+
+The closed form solution method produces the same coefficients and final objective function value as gradient descent with a good step size. However, the time taken is much less than even the fastest gradient descent run, by a factor of about $10^2$.
+
+\item %4f
+
+Fitting with varied step size \newline
+	 --number of iterations: 1779 \newline
+	 --final coefficients: 2.446407, -2.816353 \newline
+	 --final value of objective function: 3.912576 \newline
+	 --time taken: 0.034152 \newline
+
+The algorithm takes longer with varied step size than with a constant step size of $10^{-4}$, but takes less time than a constant step size of $10^{-5}$.
+
+\item %4g
+
+\item %4h
+We prefer $E_{RMS}$ over $J(w)$ because it accounts for the number of training examples in addition to error. For less training examples and some given cost, $E_{RMS}$ will be higher, indicating more chance of overfitting. For the same cost but more training examples, $E_{RMS}$ will be lower, since the model is generalizing to more training data and thus has less chance of overfitting.
+
+\item %4i
+\includegraphics[width=\linewidth]{Errors.png}
+
+The 10th degree polynomial clearly fits the \textbf{training} data best, with the lowest training error. However, the 9th and 10th degree polynomials overfit the data, as illustrated by the very high test errors and low train errors. 
+
+As such, the best degree polynomial would be one with low training and test error, which appears to be somewhere in the range m=3 to m=6, which all seem to perform with similar error rates.
 
 \end{enumerate}
 
