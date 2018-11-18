@@ -1,0 +1,148 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{CM146}
+\newcommand{\ced}{Fall 2018}
+\newcommand{\ctitle}[3]{\title{\vspace{-0.5in}\cnum, \ced\\Problem Set #1: #2}}
+\usepackage{enumitem}
+\newcommand{\solution}[1]{{{\color{black}{\bf Solution:} {#1}}}}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings} %for listings of the source code
+
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\begin{document}
+\ctitle{03}{Jonathan Chu}
+\date{}
+\maketitle
+
+\section{VC Dimension}
+\begin{enumerate}
+\item
+The VC Dimension of H is 3. To prove this we will show that VC $\geq$ 3 and VC $<$ 4.
+
+The model $ax^2 + bx + c; a, b, c, \in R$ can change sign twice at any values of x, beginning with either sign \{-1, 1\} at $x = -\infty$. Therefore any label assignment to any three points can be separated by the model, and VC $\geq$ 3.
+
+With four points, however, our model will not be able to separate the data in every case. Consider the case of $x_1 \leq x_2 \leq x_3 \leq x_4$ (all spatial configurations of four examples must satisfy this property) with $x_1 = x_3 = -1$ and $x_2 = x_4 = 1$. Since there are three sign changes as x goes from $-\infty$ to $\infty$, our hypothesis space does not contain a model that can separate these points.
+\end{enumerate}
+
+\section{Kernels}
+\begin{enumerate}
+\item
+Expanding the kernel,
+
+$K_\beta(\textbf{x}, \textbf{z}) = 1 + 3(\beta\textbf{x} \cdotp \textbf{z})^2 + 3(\beta\textbf{x} \cdot \textbf{z}) + (\beta\textbf{x} \cdot \textbf{z})^3 =$
+
+
+$1 + 3\beta^2(x_1^2z_1^2+2x_1z_1x_2z_2+x_2^2z_2^2) + 3\beta(x_1z_1+x_2z_2)+\beta^3(x_1^3z_1^3+3x_1z_1x_2^2z_2^2+3x_1^2z_1^2x_2z_2+x_2^3z_2^3)$
+\newline \newline
+$\phi_\beta(\textbf{x})^T\phi_\beta(\textbf{z}) = K_\beta(\textbf{x}, \textbf{z})$
+
+$\Rightarrow$ for $\textbf{y} \in \mathbb{R}^2$,
+
+$\phi_\beta(\textbf{y}) = (1, \sqrt{3}\beta y_1^2, \sqrt{3}\beta y_1y_2, \sqrt{3}\beta y_2^2, \sqrt{3\beta}y_1, \sqrt{3\beta}y_2,$
+
+\hspace{1.5cm} $\sqrt{\beta^3}y_1^3, \sqrt{3\beta^3}y_1y_2^3, \sqrt{3\beta^3}y_1^2y_2, \sqrt{\beta^3}y_2^3)$
+\newline \newline \newline
+$K(\textbf{x}, \textbf{z}) = (1 + \textbf{x} \cdotp \textbf{z})^3$ is equivalent to $K_\beta(\textbf{x}, \textbf{z}) = (1 + \beta \textbf{x} \cdotp \textbf{z})^3$ with $\beta = 1$. The parameter $\beta$ acts as a coefficient for elements of the feature mapping, with high $\beta$ placing more weight on higher degree elements. It is an additional parameter that gives even more flexibility in the feature map.
+\end{enumerate}
+
+\section{SVM}
+\begin{enumerate}
+\item %3a
+By graphing the data, it is clear that the line separating the data with maximum margin is one with slope $\frac{1}{2}$, passing through point (1, $\frac{1}{2}$). In other words, $\frac{w_1^*}{w_2^*} = -\frac{1}{2}$.
+\vspace{0.5cm}
+
+The two constraints we must satisfy are:
+
+$n=1: w_1^* + w_2^* \geq 1$
+
+$n=2: -w_1^* \geq 1$
+
+By inspection, $w_1^* = -1, w_2^* = 2$ satisfy both constraints as equalities and minimize $\| \textbf{$w^*$} \|$.
+
+\item %3b
+With the additional parameter b, we seek a weight vector $\textbf{$w^*$}$ with magnitude less than $\sqrt{5}$, the magnitude from part (a).
+
+Geometrically, it is obvious that the line maximizing the margin $\gamma$ is a horizontal line through the point $(1, \frac{1}{2})$
+
+$\Rightarrow w_1^* = 0, w_2^* > 0$
+
+The new constraints we must satisfy are:
+
+$n=1: w_2^* + b \geq 1$
+
+$n=2: -b \geq 1$
+\newline \newline
+$\Rightarrow b = -1$
+
+$\Rightarrow w_2^* = 2$
+
+The magnitude $\| \textbf{$w^*$} \| = 2$
+\end{enumerate}
+
+\section{Twitter analysis using SVMs}
+\subsection{Feature Extraction}
+Done.
+
+\subsection{Hyper-parameter Selection for a Linear-Kernel SVM}
+It's beneficial to maintain class proportions across folds because a fold without any regulated proportion could be less representative of the actual data. In extreme cases, a train or test set in a particular fold could be missing examples of a certain label in which case the training and test error values will be far off from reality. 
+\newline \newline
+For example, a training set containing no positively labeled examples would simply predict negative always and achieve 0 training error, but it would perform poorly on the test set, where all the positive examples have been placed.
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+ \hline
+ C & accuracy & F1-score & AUROC\\ 
+ \hline
+ $10^-3$ & 0.7089 & 0.8297 & 0.5000 \\
+ $10^-2$ & 0.7107 & 0.8306 & 0.5031 \\
+ $10^-1$ & 0.8060 & 0.8755 & 0.7188 \\
+ $10^0$  & 0.8146 & 0.8749 & 0.7531 \\
+ $10^1$  & 0.8182 & 0.8766 & 0.7592 \\
+ $10^2$  & 0.8182 & 0.8766 & 0.7592 \\
+ \hline
+ best C & $10^2$ & $10^2$ & $10^2$ \\
+ \hline
+\end{tabular}
+\end{center}
+
+The score seems to increase as C increases, for every metric. With every metric, the value of C with the best score was $10^2$.
+
+\subsection{Test-Set Performance}
+With C = $10^2$,
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ Metric & Test Performance Score\\ 
+ \hline
+ Accuracy & 0.7429 \\
+ \hline
+ F1-Score & 0.4375 \\
+ \hline
+ AUROC & 0.6259 \\
+ \hline
+\end{tabular}
+\end{center}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
